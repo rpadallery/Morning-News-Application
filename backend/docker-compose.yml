@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  backend: 
+    image: registry.gitlab.com/la_capsule/the_deployments_devils/backend
+    ports: 
+      - 3001:3001
+
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter_backend
+    command:
+      - '--path.rootfs=/host'
+    network_mode: host
+    pid: host
+    restart: unless-stopped
+    volumes:
+      - '/:/host:ro,rslave'
+    ports:
+      - 9100:9100
+
+
+
